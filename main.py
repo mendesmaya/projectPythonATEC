@@ -64,3 +64,40 @@ def extract_log_event(raw_line: str) -> dict[str, str] | None:
         "source_ip": source_ip,
         "description": description
     }
+
+
+def request_main_file() -> list[str]:
+    """
+    Request the main log file name and validate its content.
+
+    Returns:
+        list[str]: Lines read from the main log file.
+    """
+    while True:
+        file_name: str = input("Enter the main log file name: ")
+
+        try:
+            with open(file_name, "r", encoding="utf-8") as file:
+                raw_lines: list[str] = file.readlines()
+
+            valid_log_found: bool = False
+
+            for raw_line in raw_lines:
+                if extract_log_event(raw_line) is not None:
+                    valid_log_found = True
+                    break
+
+            if not valid_log_found:
+                print("Warning: the selected file does not appear to be a valid log file. Please try again.")
+                continue
+
+            return raw_lines
+
+        except FileNotFoundError:
+            print("Warning: the selected file was not found. Please try again.")
+
+        except OSError:
+            print("Warning: an operating system error occurred while accessing the file.")
+
+
+
