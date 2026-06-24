@@ -1,5 +1,5 @@
 from typing import Optional
-from parser import is_valid_ipv4
+from main import is_valid_ipv4
 
 class LogEvent:
     """
@@ -43,7 +43,7 @@ class LogEvent:
 
     @property
     def timestamp(self) -> str:
-        """Getter for the event timestamp. Read-only."""
+        """Getter for the event timestamp."""
         return self.__timestamp
 
     @property
