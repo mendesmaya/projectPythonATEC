@@ -65,6 +65,51 @@ class LogEvent:
         if not is_valid_ipv4(value):
             raise ValueError(
                 f"Invalid IP: '{value}'. "
-                f"Expected IPv4 structure (e.g., 192.168.1.10)."
+                f"Expected IPv4 structure (ex: 192.168.1.10)."
             )
-        self.__ip_address = value
+        self.__ip_address = value~
+
+        @property
+    def message(self) -> str:
+        """Getter for the event message."""
+        return self.__message
+
+    # --- UC6: Risk Calculation Method (Base) ---
+    def calculate_risk(self) -> int:
+        """
+        Calculates the total risk of the event. Base value in parent class: 0.
+
+        This method is overridden in all subclasses.
+        Formula in subclasses: Total Risk = Base Risk + len(message).
+
+        Returns:
+            int: Calculated risk. Always 0 in the base class.
+        """
+        return 0
+
+    def __str__(self) -> str:
+        """
+        User-friendly readable representation.
+        Called by print(object) or str(object).
+        Format: [TYPE] Date | IP | Risk: X | Message
+        """
+        event_type = self.__class__.__name__  # Name of the actual subclass
+        return (
+            f"[{event_type}] "
+            f"{self.__timestamp} | "
+            f"IP: {self.__ip_address} | "
+            f"Risk: {self.calculate_risk()} | "
+            f"{self.__message}"
+        )
+
+    def __repr__(self) -> str:
+        """
+        Technical object representation for debugging.
+        Format: ClassName(timestamp='...', ip='...', risk=X)
+        """
+        return (
+            f"{self.__class__.__name__}("
+            f"timestamp='{self.__timestamp}', "
+            f"ip='{self.__ip_address}', "
+            f"risk={self.calculate_risk()})"
+        )
