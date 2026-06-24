@@ -74,7 +74,6 @@ class LogEvent:
         """Getter for the event message."""
         return self.__message
 
-    # --- UC6: Risk Calculation Method (Base) ---
     def calculate_risk(self) -> int:
         """
         Calculates the total risk of the event. Base value in parent class: 0.
@@ -113,3 +112,10 @@ class LogEvent:
             f"ip='{self.__ip_address}', "
             f"risk={self.calculate_risk()})"
         )
+class AuthFailureEvent(LogEvent):
+    """
+    Authentication failure event. Subclass of LogEvent.
+
+    Base Risk = 5. Total Risk = 5 + len(message).
+    Triggered when the message contains: "failed password" or "authentication".
+    """
