@@ -112,3 +112,10 @@ class LogEvent:
             f"ip='{self.__ip_address}', "
             f"risk={self.calculate_risk()})"
         )
+class AuthFailureEvent(LogEvent):
+    """
+    Authentication failure event. Subclass of LogEvent.
+
+    Base Risk = 5. Total Risk = 5 + len(message).
+    Triggered when the message contains: "failed password" or "authentication".
+    """
