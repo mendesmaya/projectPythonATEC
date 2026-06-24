@@ -67,13 +67,14 @@ class LogEvent:
                 f"Invalid IP: '{value}'. "
                 f"Expected IPv4 structure (ex: 192.168.1.10)."
             )
-        self.__ip_address = value
-        
+        self.__ip_address = value~
+
         @property
     def message(self) -> str:
         """Getter for the event message."""
         return self.__message
 
+    # --- UC6: Risk Calculation Method (Base) ---
     def calculate_risk(self) -> int:
         """
         Calculates the total risk of the event. Base value in parent class: 0.
