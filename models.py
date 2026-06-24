@@ -74,7 +74,6 @@ class LogEvent:
         """Getter for the event message."""
         return self.__message
 
-    # --- UC6: Risk Calculation Method (Base) ---
     def calculate_risk(self) -> int:
         """
         Calculates the total risk of the event. Base value in parent class: 0.
