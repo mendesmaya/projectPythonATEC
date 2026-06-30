@@ -102,3 +102,36 @@ class ThreatAnalyzer:
         }
 
         return brute_force_ips
+    
+       # --- UC10: Pesquisa Forense por IP ---
+    def search_by_ip(self, target_ip: str) -> list[LogEvent]:
+        """
+        Searches every event linked with a specific IP.
+
+        Sorting: most critical risk first; in case of a tie, the most
+        recent event first.
+
+        Args:
+            target_ip (str): The IP address to search for.
+
+        Returns:
+            list[LogEvent]: Events matching the IP, sorted by risk descending,
+                and then by timestamp descending.
+        """
+        ip_events: list[LogEvent] = [
+            event for event in self.__events_list
+            if event.ip_address == target_ip
+        ]
+
+        if not ip_events:
+            return []
+
+        # sorted() com key= (lambda) - investigação autónoma
+        # -calculate_risk(): negativo para ordenar descendente por risco
+        sorted_events = sorted(
+            ip_events,
+            key=lambda e: (-e.calculate_risk(), e.timestamp),
+            reverse=False
+        )
+
+        return sorted_events
