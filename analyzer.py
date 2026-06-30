@@ -135,3 +135,73 @@ class ThreatAnalyzer:
         )
 
         return sorted_events
+    
+        # --- UC12: Exportação de Relatório ---
+    def export_report(self, output_path: str = "report.txt") -> None:
+        """
+        Exports the final analysis report to a text file.
+
+        Mandatory Content:
+            1. Total instanced threat number.
+            2. List of IPs registed as brute force.
+            3. Top 3 IPs with great global risk acumulated.
+        
+        Args:
+            output_path (str): file's output path.
+        """
+        brute_force_ips = self.detect_brute_force()
+
+        # Calcular risco acumulado por IP (para o Top 3)
+        risk_by_ip: dict[str, int] = {}
+        for event in self.__events_list:
+            ip = event.ip_address
+            risk_by_ip[ip] = risk_by_ip.get(ip, 0) + event.calculate_risk()
+
+        top_3_ips = sorted(risk_by_ip.items(), key=lambda x: x[1], reverse=True)[:3]
+
+        report_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        try:
+            # 'with open(..., "w")' garante fecho seguro mesmo com erro
+            with open(output_path, "w", encoding="utf-8") as report_file:
+                report_file.write("=" * 65 + "\n")
+                report_file.write("  THREAT ANALYZER - RELATÓRIO DE ANÁLISE DE SEGURANÇA\n")
+                report_file.write("=" * 65 + "\n")
+                report_file.write(f"  Gerado em: {report_timestamp}\n")
+                report_file.write("=" * 65 + "\n\n")
+
+                report_file.write("1. TOTAL DE AMEAÇAS PROCESSADAS\n")
+                report_file.write("-" * 40 + "\n")
+                report_file.write(
+                    f"   Total de instâncias criadas nesta sessão: "
+                    f"{LogEvent.total_threats}\n\n"
+                )
+
+                report_file.write("2. IPs CATEGORIZADOS COMO FORÇA BRUTA\n")
+                report_file.write("-" * 40 + "\n")
+                if brute_force_ips:
+                    for ip, count in sorted(brute_force_ips.items()):
+                        report_file.write(f"   {ip:<20} → {count} falhas de autenticação\n")
+                else:
+                    report_file.write("   Nenhum IP atingiu o threshold de força bruta.\n")
+                report_file.write("\n")
+
+                report_file.write("3. TOP 3 IPs COM MAIOR RISCO ACUMULADO\n")
+                report_file.write("-" * 40 + "\n")
+                if top_3_ips:
+                    for rank, (ip, total_risk) in enumerate(top_3_ips, start=1):
+                        report_file.write(
+                            f"   #{rank} {ip:<20} → Risco Total: {total_risk}\n"
+                        )
+                else:
+                    report_file.write("   Sem dados de risco disponíveis.\n")
+                report_file.write("\n")
+
+                report_file.write("=" * 65 + "\n")
+                report_file.write("  FIM DO RELATÓRIO\n")
+                report_file.write("=" * 65 + "\n")
+
+            print(f"\n  ✓ Relatório exportado com sucesso: '{output_path}'")
+
+        except IOError as e:
+            print(f"\n  ✗ ERRO ao exportar relatório: {e}")
