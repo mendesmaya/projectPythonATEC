@@ -65,6 +65,103 @@ class LogEvent:
         if not is_valid_ipv4(value):
             raise ValueError(
                 f"Invalid IP: '{value}'. "
-                f"Expected IPv4 structure (e.g., 192.168.1.10)."
+                f"Expected IPv4 structure (ex: 192.168.1.10)."
             )
-        self.__ip_address = value
+        self.__ip_address = value~
+
+        @property
+    def message(self) -> str:
+        """Getter for the event message."""
+        return self.__message
+
+    def calculate_risk(self) -> int:
+        """
+        Calculates the total risk of the event. Base value in parent class: 0.
+
+        This method is overridden in all subclasses.
+        Formula in subclasses: Total Risk = Base Risk + len(message).
+
+        Returns:
+            int: Calculated risk. Always 0 in the base class.
+        """
+        return 0
+
+    def __str__(self) -> str:
+        """
+        User-friendly readable representation.
+        Called by print(object) or str(object).
+        Format: [TYPE] Date | IP | Risk: X | Message
+        """
+        event_type = self.__class__.__name__  # Name of the actual subclass
+        return (
+            f"[{event_type}] "
+            f"{self.__timestamp} | "
+            f"IP: {self.__ip_address} | "
+            f"Risk: {self.calculate_risk()} | "
+            f"{self.__message}"
+        )
+
+    def __repr__(self) -> str:
+        """
+        Technical object representation for debugging.
+        Format: ClassName(timestamp='...', ip='...', risk=X)
+        """
+        return (
+            f"{self.__class__.__name__}("
+            f"timestamp='{self.__timestamp}', "
+            f"ip='{self.__ip_address}', "
+            f"risk={self.calculate_risk()})"
+        )
+class AuthFailureEvent(LogEvent):
+    """
+    Authentication failure event. Subclass of LogEvent.
+
+    Base Risk = 5. Total Risk = 5 + len(message).
+    Triggered when the message contains: "failed password" or "authentication".
+    """
+
+    __BASE_RISK: int = 5
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        """super() delegates the common __init__ to the parent class LogEvent."""
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Overrides the parent class method. Returns: int Risk = 5 + len(message)."""
+        return AuthFailureEvent.__BASE_RISK + len(self.message)
+
+
+class SqlInjectionEvent(LogEvent):
+    """
+    SQL injection attempt event. Subclass of LogEvent.
+
+    Base Risk = 10. Total Risk = 10 + len(message).
+    Triggered when the message contains: "syntax error" or "union select".
+    """
+
+    __BASE_RISK: int = 10
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Returns: int Risk = 10 + len(message)."""
+        return SqlInjectionEvent.__BASE_RISK + len(self.message)
+
+
+class PortScanEvent(LogEvent):
+    """
+    Port scan event. Subclass of LogEvent.
+
+    Base Risk = 3. Total Risk = 3 + len(message).
+    Triggered when the message contains: "port scan" or "nmap".
+    """
+
+    __BASE_RISK: int = 3
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Returns: int Risk = 3 + len(message)."""
+        return PortScanEvent.__BASE_RISK + len(self.message)
