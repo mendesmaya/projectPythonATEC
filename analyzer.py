@@ -19,11 +19,13 @@ class ThreatAnalyzer:
         According to side notes from UC9:
         "This class has to have a private list (ex: self._events_list)"
         """
+        # Lista inicialmente vazia, usando variável privada para forçar uso apropriado de classe
         self.__events_list: list[LogEvent] = []
 
         # Limite de falhas de autenticação para sinalizar brute force
         self.__BRUTE_FORCE_THRESHOLD: int = 5
 
+    #Recebe um objeto do tipo LogEvent ou uma subclasse dele e adiciona-o ao fim da lista
     def add_event(self, event: LogEvent) -> None:
         """
         Adds a single security event to the internal list.
@@ -33,6 +35,7 @@ class ThreatAnalyzer:
         """
         self.__events_list.append(event)
 
+    #Recebe a lista inteira de eventos e usa um ciclo for para os adicionar um a um
     def load_events_from_list(self, events: list[LogEvent]) -> None:
         """
         Loads a list of events to the orchestrator at once.
@@ -43,7 +46,7 @@ class ThreatAnalyzer:
         for event in events:
             self.add_event(event)
 
-    # --- UC7: Listagem de Eventos ---
+    # --- Listagem de Eventos ---
     def list_events(self, filter_type: Optional[type] = None) -> None:
         """
         Shows events on the screen, globally or filtered by type.
@@ -54,13 +57,18 @@ class ThreatAnalyzer:
             filter_type (Optional[type]): Class for filtering (ex: AuthFailureEvent)
                 if None, shows every event.
         """
+        #verifica se a lista está vazia, se sim, interrompe a execução
         if not self.__events_list:
             print("  Nenhum evento carregado em memória.")
             return
 
+        #isinstance:
+        #Se o utilizador pedir para filtrar, o código faz uma list comprehension (cria rápido uma lista)
+        #Guarda nessa nova lista apenas os eventos que pertencem a essa classe (filtro)
         if filter_type is not None:
             filtered = [e for e in self.__events_list if isinstance(e, filter_type)]
             type_name = filter_type.__name__
+            #filter_type.__name__ extrai o nome da classe e transforma o em string
         else:
             filtered = self.__events_list
             type_name = "Todos"
@@ -71,11 +79,13 @@ class ThreatAnalyzer:
             print("  Nenhum evento encontrado para este filtro.")
             return
 
+        #cria um contador que começa a 1 para evitar que a lista comece no 0.
         for i, event in enumerate(filtered, start=1):
-            # __str__ é chamado implicitamente pelo print() (UC7)
+            # __str__ que foi definido na classe do objeto é chamado pelo print()
             print(f"  {i:>3}. {event}")
+            #i:>3 serve para alinhar o texto, sempre pelo menos 3 espaços à direita.
         
-       # --- UC9: Deteção de Força Bruta ---
+       # --- Deteção de Brute Force ---
     def detect_brute_force(self) -> dict[str, int]:
         """
         Analises all events and detects potential brute force attacks.
@@ -88,13 +98,18 @@ class ThreatAnalyzer:
             dict[str, int]: Dictionary {ip: count} of suspicious IPS
                 (only those that reach the threshold)
         """
+        #dicionário temporário para contar falhas por IP.
         auth_failure_count: dict[str, int] = {}
 
         for event in self.__events_list:
+            #faz o sistema ignorar eventos de outro tipo, procura só falhas de autenticação
             if isinstance(event, AuthFailureEvent):
                 ip = event.ip_address
+                #procura o IP no dicionário, se já lá estivar, devolve o número de falhas que tem
+                #se não estiver, devolve o valor 0. Depois soma 1 a esse valor, registando.
                 auth_failure_count[ip] = auth_failure_count.get(ip, 0) + 1
 
+        #filtra e cria um dicionário novo contendo apenas IPs com contador >=5
         brute_force_ips: dict[str, int] = {
             ip: count
             for ip, count in auth_failure_count.items()
@@ -103,7 +118,8 @@ class ThreatAnalyzer:
 
         return brute_force_ips
     
-       # --- UC10: Pesquisa Forense por IP ---
+       # --- Pesquisa Forense por IP ---
+       #filtra a lista principal e extrai apenas os eventos gerados pelo IP solicitado.
     def search_by_ip(self, target_ip: str) -> list[LogEvent]:
         """
         Searches every event linked with a specific IP.
@@ -126,8 +142,10 @@ class ThreatAnalyzer:
         if not ip_events:
             return []
 
-        # sorted() com key= (lambda) - investigação autónoma
-        # -calculate_risk(): negativo para ordenar descendente por risco
+        # sorted() com key= (lambda) - investigação autónoma usando função anónima lambda
+        # ordena por 2 critérios, sendo o critério 1 o primeiro, se houver empate usa o segundo
+        # -calculate_risk(): sinal negativo para ordenar descendente o risco.
+        #e.timestamp: se houver dois eventos com o mesmo risco, mostra o evento mais antigo primeiro
         sorted_events = sorted(
             ip_events,
             key=lambda e: (-e.calculate_risk(), e.timestamp),
@@ -136,7 +154,7 @@ class ThreatAnalyzer:
 
         return sorted_events
     
-        # --- UC12: Exportação de Relatório ---
+        # --- Exportação de Relatório ---
     def export_report(self, output_path: str = "report.txt") -> None:
         """
         Exports the final analysis report to a text file.
@@ -151,18 +169,25 @@ class ThreatAnalyzer:
         """
         brute_force_ips = self.detect_brute_force()
 
-        # Calcular risco acumulado por IP (para o Top 3)
+        # Calcular risco acumulado por IP
+        # Cria um dicionario onde vai somando os pontos de risco de cada evento ao seu IP
         risk_by_ip: dict[str, int] = {}
         for event in self.__events_list:
             ip = event.ip_address
+            #transforma o dicionário numa lista de pares
             risk_by_ip[ip] = risk_by_ip.get(ip, 0) + event.calculate_risk()
 
+        #key=lambda x: x[1], reverse=True ordena a lista com base no segundo elemento da lista
+        #que é o valor de risco acumulado de forma decrescente
+        #[:3] captura apenas o top3
         top_3_ips = sorted(risk_by_ip.items(), key=lambda x: x[1], reverse=True)[:3]
 
         report_timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
+        #se o disco tiver cheio ou programa com permissoes insuficientes
+        #gera um erro.
         try:
-            # 'with open(..., "w")' garante fecho seguro mesmo com erro
+            # 'with open(..., "w")'abre em modo escrita e garante fecho seguro mesmo com erro
             with open(output_path, "w", encoding="utf-8") as report_file:
                 report_file.write("=" * 65 + "\n")
                 report_file.write("  THREAT ANALYZER - RELATÓRIO DE ANÁLISE DE SEGURANÇA\n")
@@ -174,6 +199,8 @@ class ThreatAnalyzer:
                 report_file.write("-" * 40 + "\n")
                 report_file.write(
                     f"   Total de instâncias criadas nesta sessão: "
+                    #acede ao atributo de classe estático LogEvent para saber nº total de
+                    #ameaças registadas na memória
                     f"{LogEvent.total_threats}\n\n"
                 )
 
