@@ -156,6 +156,12 @@ def process_log_lines(raw_lines: list[str], safe_ips: set[str]) -> list[LogEvent
 
 def display_menu() -> None:
     """Displays the main CLI application menu (part of UC11)."""
+    print(r"""
+    _._     _,-'""`-._
+    (,-.`._,'(       |\`-/|
+        `-.-' \ )-`( , o o)
+              `-    \`_`"'-
+    """)
     print("\n" + "=" * 55)
     print("   THREAT ANALYZER CLI - Control Panel")
     print("=" * 55)
@@ -175,6 +181,15 @@ def run_listing_submenu(analyzer: ThreatAnalyzer) -> None:
     Args:
         analyzer (ThreatAnalyzer): Orchestrator instance.
     """
+    print(r"""
+        /\_____/\
+       /  o   o  \
+      ( ==  ^  == )
+       )         (
+      (           )
+     ( (  )   (  ) )
+    (__(__)___(__)__)
+    """)
     print("\n  --- Event Listing Options ---")
     print("  a) All events")
     print("  b) AuthFailureEvent only")
