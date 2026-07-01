@@ -67,9 +67,9 @@ class LogEvent:
                 f"Invalid IP: '{value}'. "
                 f"Expected IPv4 structure (ex: 192.168.1.10)."
             )
-        self.__ip_address = value~
+        self.__ip_address = value
 
-        @property
+    @property
     def message(self) -> str:
         """Getter for the event message."""
         return self.__message
