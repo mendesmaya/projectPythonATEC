@@ -119,3 +119,97 @@ class AuthFailureEvent(LogEvent):
     Base Risk = 5. Total Risk = 5 + len(message).
     Triggered when the message contains: "failed password" or "authentication".
     """
+
+    __BASE_RISK: int = 5
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        """super() delegates the common __init__ to the parent class LogEvent."""
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Overrides the parent class method. Returns: int Risk = 5 + len(message)."""
+        return AuthFailureEvent.__BASE_RISK + len(self.message)
+
+
+class SqlInjectionEvent(LogEvent):
+    """
+    SQL injection attempt event. Subclass of LogEvent.
+
+    Base Risk = 10. Total Risk = 10 + len(message).
+    Triggered when the message contains: "syntax error" or "union select".
+    """
+
+    __BASE_RISK: int = 10
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Returns: int Risk = 10 + len(message)."""
+        return SqlInjectionEvent.__BASE_RISK + len(self.message)
+
+
+class PortScanEvent(LogEvent):
+    """
+    Port scan event. Subclass of LogEvent.
+
+    Base Risk = 3. Total Risk = 3 + len(message).
+    Triggered when the message contains: "port scan" or "nmap".
+    """
+
+    __BASE_RISK: int = 3
+
+    def __init__(self, timestamp: str, ip_address: str, message: str) -> None:
+        super().__init__(timestamp, ip_address, message)
+
+    def calculate_risk(self) -> int:
+        """Returns: int Risk = 3 + len(message)."""
+        return PortScanEvent.__BASE_RISK + len(self.message)
+    
+def classify_event(
+    timestamp: str,
+    ip_address: str,
+    message: str
+) -> Optional[LogEvent]:
+    """
+    Analyzes the message content and instantiates the correct subclass.
+
+    Implements the triage logic: evaluates the textual content of the
+    message using if/elif, converting it to lowercase with .lower() to
+    prevent capitalization mismatches.
+
+    Keywords defined by the specification:
+        - AuthFailureEvent: "failed password", "authentication"
+        - SqlInjectionEvent: "syntax error", "union select"
+        - PortScanEvent: "port scan", "nmap"
+
+    Args:
+        timestamp (str): Event timestamp.
+        ip_address (str): Source IP address.
+        message (str): Event message (raw text).
+
+    Returns:
+        Optional[LogEvent]: An instance of the correct subclass,
+            or None if the message does not match any known threat
+            or if the IP is invalid (ValueError caught).
+    """
+    msg_lower: str = message.lower()
+
+    try:
+        # Triage Center: evaluates keywords (order = most critical first)
+        if "syntax error" in msg_lower or "union select" in msg_lower:
+            return SqlInjectionEvent(timestamp, ip_address, message)
+
+        elif "failed password" in msg_lower or "authentication" in msg_lower:
+            return AuthFailureEvent(timestamp, ip_address, message)
+
+        elif "port scan" in msg_lower or "nmap" in msg_lower:
+            return PortScanEvent(timestamp, ip_address, message)
+
+        else:
+            # Message not recognized as a known threat - ignored
+            return None
+
+    except ValueError:
+        # Invalid IP detected by the LogEvent class setter
+        return None
