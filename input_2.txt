@@ -1,0 +1,50 @@
+2026-06-15 11:00:00 ; 192.168.1.20 ; failed password
+  2026-06-15 11:01:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:02:00;192.168.1.20;failed password
+2026-06-15 11:03:00 ; 300.168.1.20 ; authentication failure
+2026-06-15 11:04:00 | 192.168.1.20 | failed password
+2026-06-15 11:05:00 ; 192.168.1.20 ; 
+2026-06-15 11:06:00 ; 192.168.1.20 ; syntax error
+2026-15-06 11:07:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:08:00 ; 192.168.1.20 ; union select
+2026/06/15 11:09:00 ; 192.168.1.20 ; port closed
+2026-06-15 11:10:00 ; 192.168.1.20 ; root login refused
+2026-06-15 11:11:00 ; 999.999.999.999 ; failed password
+2026-06-15 11:12:00 ; 10.0.0.5 ; connection refused
+	2026-06-15 11:13:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:14:00 ; 192.168.1.20 ; tcp syn stealth
+2026-06-15 11:15:00 ; 192.168.1.20 ; drop table users
+2026-06-15 11:16:00 ; 192.168.1 ; failed password
+2026-06-15 11:17:00 ; 192.168.1.20 ; authentication failure
+2026-06-15 11:18:00 ; abc.def.ghi.jkl ; union select
+2026-06-15 11:19:00 ; 192.168.1.20 ; port closed
+[SYSTEM REBOOT SIGNAL RECEIVED]
+2026-06-15 11:21:00 ; 10.10.10.10 ; connection refused
+2026-06-15 11:22:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:23:00 ; 192.168.1.20 ; syntax error
+2026-06-15 11:24:00 ; 192.168.1.20 ; 
+2026-06-15 11:25:00   ;   192.168.1.20   ;   failed password
+2026-06-15 11:26:00 ; 10.0.0.256 ; union select
+2026-06-15 11:27:00 ; 192.168.1.20 ; port closed
+2026-06-15 11:28:00 ; 192.168.1.20 ; tcp syn stealth
+2026-06-15 11:29:00 ; 192.168.1.20 ; drop table users
+2026-06-15 11:30:00 ; 192-168-1-20 ; failed password
+2026-06-15 11:31:00 ; 192.168.1.20 ; authentication failure
+2026-06-15 11:32:00 ; 192.168.1.20 ; root login refused
+2026-06-15 11:33:00 ; 10.0.0.5 ; failed password
+2026-06-15 11:34:00 ; 192.168.1.20 ; syntax error
+2026-06-15 11:35:00 ; 192.168.1.20 ; union select
+2026-06-15 11:36:00 ; 192.168.1.20 ; port closed
+ERROR 404 RESOURCE NOT FOUND
+2026-06-15 11:38:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:39:00 ; 192.168.1.20 ; connection refused
+2026-06-15 11:40:00 ; 192.168.1.20 ; drop table users
+2026-06-15 11:41:00 ; 10.0.0.12 ; failed password
+2026-06-15 11:42:00 ; 192.168.1.20 ; authentication failure
+2026-06-15 11:43:00 ; 192.168.1.20 ; tcp syn stealth
+2026-06-15 11:44:00 ; 192.168.1.20 ; union select
+2026-06-15 11:45:00 ; 192.168.1.20 ; port closed
+2026-06-15 11:46:00 ; 192.168.1.20 ; root login refused
+2026-06-15 11:47:00 ; 10.0.0.5 ; syntax error
+2026-06-15 11:48:00 ; 192.168.1.20 ; failed password
+2026-06-15 11:49:00 ; 192.168.1.20 ; drop table users

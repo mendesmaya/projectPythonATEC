@@ -1,0 +1,100 @@
+2026-06-16 00:01:10 ; 192.168.1.50 ; failed password
+2026-06-16 00:02:15 ; 192.168.1.50 ; failed password
+2026-06-16 00:03:00 ; 10.0.0.5 ; connection established
+2026-06-16 00:05:12 ; 192.168.1.50 ; failed password
+2026-06-16 00:08:45 ; 172.16.0.8 ; port closed
+2026-06-16 00:08:46 ; 172.16.0.8 ; port closed
+2026-06-16 00:08:47 ; 172.16.0.8 ; connection refused
+2026-06-16 00:10:10 ; 192.168.1.50 ; authentication failure
+2026-06-16 00:12:00 ; 10.0.0.12 ; data sync complete
+2026-06-16 00:15:15 ; 192.168.1.254 ; admin login successful
+2026-06-16 00:18:00 ; 203.0.113.42 ; syntax error
+2026-06-16 00:18:05 ; 203.0.113.42 ; union select
+2026-06-16 00:19:12 ; 192.168.1.50 ; failed password
+2026-06-16 00:20:00 ; 192.168.1.50 ; root login refused
+2026-06-16 00:22:30 ; 172.16.0.8 ; tcp syn stealth
+2026-06-16 00:25:12 ; 10.0.0.5 ; file download
+2026-06-16 00:28:05 ; 203.0.113.42 ; drop table users
+2026-06-16 00:30:00 ; 192.168.1.50 ; failed password
+2026-06-16 00:31:00 ; 8.8.8.8 ; port closed
+2026-06-16 00:32:00 ; 8.8.8.8 ; connection refused
+2026-06-16 00:35:00 ; 10.0.0.5 ; session timeout
+2026-06-16 00:40:10 ; 192.168.1.50 ; failed password
+2026-06-16 00:41:15 ; 192.168.1.50 ; failed password
+2026-06-16 00:42:00 ; 10.10.10.10 ; service restarted
+2026-06-16 00:45:12 ; 192.168.1.50 ; failed password
+2026-06-16 00:48:45 ; 172.16.0.8 ; port closed
+2026-06-16 00:48:46 ; 172.16.0.8 ; port closed
+2026-06-16 00:48:47 ; 172.16.0.8 ; connection refused
+2026-06-16 00:50:10 ; 192.168.1.50 ; authentication failure
+2026-06-16 00:52:00 ; 192.168.1.100 ; background job started
+2026-06-16 00:55:15 ; 192.168.1.254 ; config updated
+2026-06-16 00:58:00 ; 203.0.113.42 ; syntax error
+2026-06-16 00:58:05 ; 203.0.113.42 ; union select
+2026-06-16 00:59:12 ; 192.168.1.50 ; failed password
+2026-06-16 01:00:00 ; 192.168.1.50 ; root login refused
+2026-06-16 01:02:30 ; 172.16.0.8 ; tcp syn stealth
+2026-06-16 01:05:12 ; 10.0.0.5 ; file upload success
+2026-06-16 01:08:05 ; 203.0.113.42 ; drop table users
+2026-06-16 01:10:00 ; 192.168.1.50 ; failed password
+2026-06-16 01:11:00 ; 1.1.1.1 ; port closed
+2026-06-16 01:12:00 ; 1.1.1.1 ; connection refused
+2026-06-16 01:15:00 ; 10.0.0.12 ; user password changed
+2026-06-16 01:20:10 ; 192.168.1.50 ; failed password
+2026-06-16 01:21:15 ; 192.168.1.50 ; failed password
+2026-06-16 01:22:00 ; 10.0.0.5 ; session established
+2026-06-16 01:25:12 ; 192.168.1.50 ; failed password
+2026-06-16 01:28:45 ; 172.16.0.8 ; port closed
+2026-06-16 01:28:46 ; 172.16.0.8 ; port closed
+2026-06-16 01:28:47 ; 172.16.0.8 ; connection refused
+2026-06-16 01:30:10 ; 192.168.1.50 ; authentication failure
+2026-06-16 01:32:00 ; 10.0.0.5 ; database backup started
+2026-06-16 01:35:15 ; 192.168.1.254 ; firewall rule added
+2026-06-16 01:38:00 ; 203.0.113.42 ; syntax error
+2026-06-16 01:38:05 ; 203.0.113.42 ; union select
+2026-06-16 01:39:12 ; 192.168.1.50 ; failed password
+2026-06-16 01:40:00 ; 192.168.1.50 ; root login refused
+2026-06-16 01:42:30 ; 172.16.0.8 ; tcp syn stealth
+2026-06-16 01:45:12 ; 10.0.0.12 ; report generated
+2026-06-16 01:48:05 ; 203.0.113.42 ; drop table users
+2026-06-16 01:50:00 ; 192.168.1.50 ; failed password
+2026-06-16 01:51:00 ; 8.8.8.8 ; port closed
+2026-06-16 01:52:00 ; 8.8.8.8 ; connection refused
+2026-06-16 01:55:00 ; 10.0.0.5 ; log rotation
+2026-06-16 02:00:10 ; 192.168.1.50 ; failed password
+2026-06-16 02:01:15 ; 192.168.1.50 ; failed password
+2026-06-16 02:02:00 ; 10.10.10.10 ; api request received
+2026-06-16 02:05:12 ; 192.168.1.50 ; failed password
+2026-06-16 02:08:45 ; 172.16.0.8 ; port closed
+2026-06-16 02:08:46 ; 172.16.0.8 ; port closed
+2026-06-16 02:08:47 ; 172.16.0.8 ; connection refused
+2026-06-16 02:10:10 ; 192.168.1.50 ; authentication failure
+2026-06-16 02:12:00 ; 10.0.0.5 ; disk space warning
+2026-06-16 02:15:15 ; 192.168.1.254 ; policy updated
+2026-06-16 02:18:00 ; 203.0.113.42 ; syntax error
+2026-06-16 02:18:05 ; 203.0.113.42 ; union select
+2026-06-16 02:19:12 ; 192.168.1.50 ; failed password
+2026-06-16 02:20:00 ; 192.168.1.50 ; root login refused
+2026-06-16 02:22:30 ; 172.16.0.8 ; tcp syn stealth
+2026-06-16 02:25:12 ; 10.0.0.12 ; cache cleared
+2026-06-16 02:28:05 ; 203.0.113.42 ; drop table users
+2026-06-16 02:30:00 ; 192.168.1.50 ; failed password
+2026-06-16 02:31:00 ; 1.1.1.1 ; port closed
+2026-06-16 02:32:00 ; 1.1.1.1 ; connection refused
+2026-06-16 02:35:00 ; 10.0.0.5 ; user logout
+2026-06-16 02:40:10 ; 192.168.1.50 ; failed password
+2026-06-16 02:41:15 ; 192.168.1.50 ; failed password
+2026-06-16 02:42:00 ; 192.168.1.101 ; service health check
+2026-06-16 02:45:12 ; 192.168.1.50 ; failed password
+2026-06-16 02:48:45 ; 172.16.0.8 ; port closed
+2026-06-16 02:48:46 ; 172.16.0.8 ; port closed
+2026-06-16 02:48:47 ; 172.16.0.8 ; connection refused
+2026-06-16 02:50:10 ; 192.168.1.50 ; authentication failure
+2026-06-16 02:52:00 ; 10.0.0.5 ; metrics collected
+2026-06-16 02:55:15 ; 192.168.1.254 ; dns cache flushed
+2026-06-16 02:58:00 ; 203.0.113.42 ; syntax error
+2026-06-16 02:58:05 ; 203.0.113.42 ; union select
+2026-06-16 02:59:12 ; 192.168.1.50 ; failed password
+2026-06-16 03:00:00 ; 192.168.1.50 ; root login refused
+2026-06-16 03:02:30 ; 172.16.0.8 ; tcp syn stealth
+2026-06-16 03:05:12 ; 127.0.0.1 ; localhost connection
