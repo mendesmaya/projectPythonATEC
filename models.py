@@ -1,5 +1,32 @@
 from typing import Optional
-from main import is_valid_ipv4
+
+def is_valid_ipv4(ip_address: str) -> bool:
+    """
+    Validate the structure of an IPv4 address.
+
+    Args:
+        ip_address (str): The IP address to validate.
+
+    Returns:
+        bool: True if the IP address is valid, False otherwise.
+    """
+    octets: list[str] = ip_address.split(".")
+
+    if len(octets) != 4:
+        return False
+
+    for octet in octets:
+        if not octet.isdigit():
+            return False
+
+        number: int = int(octet)
+
+        if number < 0 or number > 255:
+            return False
+
+    return True
+
+
 
 class LogEvent:
     """
@@ -67,9 +94,9 @@ class LogEvent:
                 f"Invalid IP: '{value}'. "
                 f"Expected IPv4 structure (ex: 192.168.1.10)."
             )
-        self.__ip_address = value~
+        self.__ip_address = value
 
-        @property
+    @property
     def message(self) -> str:
         """Getter for the event message."""
         return self.__message
